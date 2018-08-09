@@ -1,3 +1,10 @@
+/**
+ * This is NOT a freeware, use is subject to license terms
+ *
+ * path   go-push/midware
+ * date   2018/6/19 17:37 
+ * author chenjingxiu
+ */
 package midware
 
 import (
@@ -8,14 +15,13 @@ import (
 
 const (
 	poolSize = 10
-	timeout  = 60 * time.Second
+	timeout  = 30 * time.Second
 )
 
 var (
 	session    *mgo.Session
 	newSession *mgo.Session
 	err        error
-
 )
 
 func init() {

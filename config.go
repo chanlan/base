@@ -14,39 +14,47 @@ const (
 //--------------------------------------------------------------------------------------------------
 //RabbitMQ
 //ExchangeMapping　the mapping of device and exchange
+const (
+	EXCHANGE_DEFAULT = iota
+	EXCHANGE_ANDROID
+	EXCHANGE_XIAOMI
+	EXCHANGE_HUAWEI
+	EXCHANGE_IOS
+)
+
 var ExchangeMapping = map[int]string{
-	0:  AndroidExchangeName,
-	1:  MIExchangeName,
-	2:  HWExchangeName,
-	9:  IOSExchangeName,
-	-1: DefaultExchangeName,
+	EXCHANGE_ANDROID: AndroidExchangeName,
+	EXCHANGE_XIAOMI:  MIExchangeName,
+	EXCHANGE_HUAWEI:  HWExchangeName,
+	EXCHANGE_IOS:     IOSExchangeName,
+	EXCHANGE_DEFAULT: DefaultExchangeName,
 }
 //Supported Exchange List
 const (
-	DefaultQueueName    = "android_push_sell"
-	DefaultExchangeName = "android_push_sell"
-	DefaultRoutingKey   = "android_push_sell"
-	IOSQueueName        = "ios_push_sell"
-	IOSExchangeName     = "ios_push_sell"
-	IOSRoutingKey       = "ios_push_sell"
-	AndroidQueueName    = "android_push_event"
-	AndroidExchangeName = "android_push_event"
-	AndroidRoutingKey   = "android_push_event"
-	MIQueueName         = "xiaomi_push_event"
-	MIExchangeName      = "xiaomi_push_event"
-	MIRoutingKey        = "xiaomi_push_event"
-	HWQueueName         = "huawei_push_event"
-	HWExchangeName      = "huawei_push_event"
-	HWRoutingKey        = "huawei_push_event"
-	DefaultExchangeType = "direct"
+	DefaultQueueName    = "default"
+	DefaultExchangeName = "default"
+	DefaultRoutingKey   = "default"
+	IOSQueueName        = "ios"
+	IOSExchangeName     = "ios"
+	IOSRoutingKey       = "ios"
+	AndroidQueueName    = "android"
+	AndroidExchangeName = "android"
+	AndroidRoutingKey   = "android"
+	MIQueueName         = "xiaomi"
+	MIExchangeName      = "xiaomi"
+	MIRoutingKey        = "xiaomi"
+	HWQueueName         = "huawei"
+	HWExchangeName      = "huawei"
+	HWRoutingKey        = "huawei"
 )
+const DefaultExchangeType = "direct"
 
 //Queue Server
 const QueueServer = "amqp://guest:guest@127.0.0.1:5672/"
 
 //-----------------------------------------------------------------------------------------------------
 //Mongodb
-var (
+const (
 	MogServers = "127.0.0.1:27017"
 	MogUser    = ""
 	MogPwd     = ""
@@ -55,4 +63,4 @@ var (
 
 //------------------------------------------------------------------------------------------------------
 //redis
-var RedisServers = "127.0.0.1:6709;127.0.0.1:6707;127.0.0.1:6708"
+const RedisServers = "127.0.0.1:6709;127.0.0.1:6707;127.0.0.1:6708"

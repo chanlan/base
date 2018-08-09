@@ -1,3 +1,10 @@
+/**
+ * This is NOT a freeware, use is subject to license terms
+ *
+ * path   go-push/midware
+ * date   2018/6/21 10:40
+ * author chenjingxiu
+ */
 package midware
 
 import (

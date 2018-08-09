@@ -1,3 +1,10 @@
+/**
+ * This is NOT a freeware, use is subject to license terms
+ *
+ * path   go-push/midware
+ * date   2018/6/19 11:18
+ * author chenjingxiu
+ */
 package midware
 
 import (
@@ -47,22 +54,22 @@ var (
 )
 
 func init() {
-	NewAndroidChannel(QueueServer)
-	NewDefaultChannel(QueueServer)
-	NewHWChannel(QueueServer)
-	NewIOSChannel(QueueServer)
-	NewMIChannel(QueueServer)
+	NewAndroidChannel(QueueServer, amqpConfig)
+	NewDefaultChannel(QueueServer, amqpConfig)
+	NewHWChannel(QueueServer, amqpConfig)
+	NewIOSChannel(QueueServer, amqpConfig)
+	NewMIChannel(QueueServer, amqpConfig)
 }
 
 //NewDefaultChannel create a default channel to transport messages,
 //by passed a parameter to url used to connect the rabbitMQ
-func NewDefaultChannel(url string) (*pool.ObjectPool, error) {
+func NewDefaultChannel(url string, config amqp.Config) (*pool.ObjectPool, error) {
 	PoolConfig := pool.NewDefaultPoolConfig()
 	PoolConfig.MaxTotal = 10
 	WithAbandonedConfig := pool.NewDefaultAbandonedConfig()
 	defaultPool = pool.NewObjectPoolWithAbandonedConfig(pool.NewPooledObjectFactorySimple(
 		func() (interface{}, error) {
-			conn, err := amqp.Dial(url)
+			conn, err := amqp.DialConfig(url, config)
 			if err != nil {
 				return nil, err
 			}
@@ -108,13 +115,13 @@ func NewDefaultChannel(url string) (*pool.ObjectPool, error) {
 //NewAndroidChannel create a channel to transport messages,
 //by passed a parameter to url used to connect the rabbitMQ
 //For Android Device
-func NewAndroidChannel(url string) (*pool.ObjectPool, error) {
+func NewAndroidChannel(url string, config amqp.Config) (*pool.ObjectPool, error) {
 	PoolConfig := pool.NewDefaultPoolConfig()
 	PoolConfig.MaxTotal = 10
 	WithAbandonedConfig := pool.NewDefaultAbandonedConfig()
 	androidPool = pool.NewObjectPoolWithAbandonedConfig(pool.NewPooledObjectFactorySimple(
 		func() (interface{}, error) {
-			conn, err := amqp.Dial(url)
+			conn, err := amqp.DialConfig(url, config)
 			if err != nil {
 				return nil, err
 			}
@@ -160,13 +167,13 @@ func NewAndroidChannel(url string) (*pool.ObjectPool, error) {
 //NewIOSChannel create a channel to transport messages,
 //by passed a parameter to url used to connect the rabbitMQ
 //For IOS Device
-func NewIOSChannel(url string) (*pool.ObjectPool, error) {
+func NewIOSChannel(url string, config amqp.Config) (*pool.ObjectPool, error) {
 	PoolConfig := pool.NewDefaultPoolConfig()
 	PoolConfig.MaxTotal = 10
 	WithAbandonedConfig := pool.NewDefaultAbandonedConfig()
 	iosPool = pool.NewObjectPoolWithAbandonedConfig(pool.NewPooledObjectFactorySimple(
 		func() (interface{}, error) {
-			conn, err := amqp.Dial(url)
+			conn, err := amqp.DialConfig(url, config)
 			if err != nil {
 				return nil, err
 			}
@@ -212,13 +219,13 @@ func NewIOSChannel(url string) (*pool.ObjectPool, error) {
 //NewMIChannel create a channel to transport messages,
 //by passed a parameter to url used to connect the rabbitMQ
 //For MI Device
-func NewMIChannel(url string) (*pool.ObjectPool, error) {
+func NewMIChannel(url string, config amqp.Config) (*pool.ObjectPool, error) {
 	PoolConfig := pool.NewDefaultPoolConfig()
 	PoolConfig.MaxTotal = 10
 	WithAbandonedConfig := pool.NewDefaultAbandonedConfig()
 	miPool = pool.NewObjectPoolWithAbandonedConfig(pool.NewPooledObjectFactorySimple(
 		func() (interface{}, error) {
-			conn, err := amqp.Dial(url)
+			conn, err := amqp.DialConfig(url, config)
 			if err != nil {
 				return nil, err
 			}
@@ -264,13 +271,13 @@ func NewMIChannel(url string) (*pool.ObjectPool, error) {
 //NewHWChannel create a channel to transport messages,
 //by passed a parameter to url used to connect the rabbitMQ
 //For HuaWei Device
-func NewHWChannel(url string) (*pool.ObjectPool, error) {
+func NewHWChannel(url string, config amqp.Config) (*pool.ObjectPool, error) {
 	PoolConfig := pool.NewDefaultPoolConfig()
 	PoolConfig.MaxTotal = 10
 	WithAbandonedConfig := pool.NewDefaultAbandonedConfig()
 	hwPool = pool.NewObjectPoolWithAbandonedConfig(pool.NewPooledObjectFactorySimple(
 		func() (interface{}, error) {
-			conn, err := amqp.Dial(url)
+			conn, err := amqp.DialConfig(url, config)
 			if err != nil {
 				return nil, err
 			}
@@ -383,8 +390,10 @@ func Publish(ex_name string, body []byte) (error) {
 			}
 			defaultPool.ReturnObject(ch)
 		}
+	default:
+		return errors.New("not supported device type")
 	}
-	return errors.New("not supported device type")
+	return nil
 }
 
 //Receive consume a message from a specified channel mq to parse
