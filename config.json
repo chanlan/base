@@ -1,0 +1,61 @@
+{
+  "database": {
+    "default": {
+      "driver": "mysql",
+      "dsn": "root:123456@(127.0.0.1:7308)/push",
+      "maxOpen": 10,
+      "maxIdle": 10,
+      "showSQl": true,
+      "prefix": ""
+    }
+  },
+  "redis": {
+    "default": {
+      "url": "127.0.0.1:6377"
+    },
+    "master": {
+      "url": "127.0.0.1:6378"
+    },
+    "slave": {
+      "url": "127.0.0.1:6379"
+    }
+  },
+  "rabbitMQ": {
+    "default": {
+      "dns": "mqp://admin:123456@127.0.0.1:5672/",
+      "virtualHost": "/"
+    }
+  },
+  "mongodb": {
+    "default": {
+      "username": "",
+      "password": "",
+      "dbname": "",
+      "dns": "",
+      "url": "/"
+    }
+  },
+  "push": {
+    "HW": {
+      "name": "huawei",
+      "appId": "",
+      "appSecret": "",
+      "icon": "",
+      "package": "",
+      "intentTail": "",
+      "intentHead": ""
+    },
+    "MI": {
+      "name": "",
+      "appId": "",
+      "appSecret": "",
+      "icon": "",
+      "package": "",
+      "intentTail": "",
+      "intentHead": ""
+    }
+  },
+  "api": {
+    "BigData": ""
+  }
+}
