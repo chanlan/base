@@ -1,5 +1,4 @@
 /**
- * [Gome Wap!] (C)2013-2023 Gome Inc.
  * This is NOT a freeware, use is subject to license terms
  *
  * path   go-push/main
